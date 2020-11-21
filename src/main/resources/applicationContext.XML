@@ -10,4 +10,6 @@
 
     <context:component-scan base-package="org.example"/>
 
+    <context:property-placeholder location="musicPlayer.propeties"/>
+
 </beans>

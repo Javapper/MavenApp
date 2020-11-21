@@ -2,8 +2,11 @@ package org.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,6 +19,20 @@ public class MusicPlayer {
     private  Music jazzMusic;
     private  Music rockMusic;
 
+    @Value("${musicPlayer.name}")
+    private String name;
+
+    @Value("${musicPlayer.volume}")
+    private int volume;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
     @Autowired
     public MusicPlayer(@Qualifier("classicalMusic") Music classicalMusic, @Qualifier("jazzMusic") Music jazzMusic, @Qualifier("rockMusic") Music rockMusic) {
         this.classicalMusic = classicalMusic;
@@ -23,13 +40,15 @@ public class MusicPlayer {
         this.rockMusic = rockMusic;
     }
 
-//    public void myInitMethod() {
-//        System.out.println("Doing my initialization");
-//    }
-//
-//    public void myDestroyMethod() {
-//        System.out.println("Doing my destroying");
-//    }
+    @PostConstruct
+    public void myInitMethod() {
+        System.out.println("Doing my initialization");
+    }
+
+    @PreDestroy
+    public void myDestroyMethod() {
+        System.out.println("Doing my destroying");
+    }
 
 
     public void playMusic(Genre genre) {
