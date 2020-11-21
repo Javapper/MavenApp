@@ -1,14 +1,22 @@
 package org.example;
 
-public class ClassicalMusic implements Music{
-    private ClassicalMusic() {}
+import org.springframework.stereotype.Component;
 
-    public static ClassicalMusic getClassicalMusic() {
-        return new ClassicalMusic();
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+public class ClassicalMusic implements Music{
+    private List<String> classiicalMusic = new ArrayList<>();
+
+    private ClassicalMusic() {
+        classiicalMusic.add("Hungarian Rhapsody");
+        classiicalMusic.add("Mediterraneo");
+        classiicalMusic.add("Stabat mater");
     }
 
     @Override
-    public String getSong() {
-        return "Hungarian Rhapsody";
+    public List<String> getSong() {
+        return classiicalMusic;
     }
 }

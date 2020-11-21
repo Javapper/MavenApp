@@ -1,53 +1,47 @@
 package org.example;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+@Component
 public class MusicPlayer {
     private List<Music> musicList = new ArrayList<>();
 
-    private String name;
-    private int volume;
+    private Music classicalMusic;
+    private  Music jazzMusic;
+    private  Music rockMusic;
 
-    public void setMusicList(List<Music> musicList) {
-        this.musicList = musicList;
+    @Autowired
+    public MusicPlayer(@Qualifier("classicalMusic") Music classicalMusic, @Qualifier("jazzMusic") Music jazzMusic, @Qualifier("rockMusic") Music rockMusic) {
+        this.classicalMusic = classicalMusic;
+        this.jazzMusic = jazzMusic;
+        this.rockMusic = rockMusic;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getVolume() {
-        return volume;
-    }
-
-    public void setVolume(int volume) {
-        this.volume = volume;
-    }
-
-    public MusicPlayer(List<Music> musicList) {
-        this.musicList = musicList;
-    }
+//    public void myInitMethod() {
+//        System.out.println("Doing my initialization");
+//    }
+//
+//    public void myDestroyMethod() {
+//        System.out.println("Doing my destroying");
+//    }
 
 
-    public MusicPlayer() {
-    }
+    public void playMusic(Genre genre) {
+        Random random = new Random();
+        int randomNumber = random.nextInt(3);
 
-    public void myInitMethod() {
-        System.out.println("Doing my initialization");
-    }
-
-    public void myDestroyMethod() {
-        System.out.println("Doing my destroying");
-    }
-
-    public void playMusic() {
-        for (Music music: musicList) {
-            System.out.println("Playing " + music.getSong());
+        if (genre == Genre.ClassicalMusic) {
+            System.out.println("Playing " + classicalMusic.getSong().get(randomNumber));
+        } else if (genre == Genre.JazzMusic) {
+            System.out.println("Playing " + jazzMusic.getSong().get(randomNumber));
+        } else {
+            System.out.println("Playing " + rockMusic.getSong().get(randomNumber));
         }
     }
 }
